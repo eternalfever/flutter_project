@@ -5,6 +5,7 @@ class Users {
     required this.firstName,
     required this.lastName,
     required this.avatar,
+    this.liked = false,
   });
 
   int id;
@@ -12,6 +13,7 @@ class Users {
   String firstName;
   String lastName;
   String avatar;
+  bool liked;
 
   factory Users.fromJson(Map<String, dynamic> json) => Users(
     id: json["id"],

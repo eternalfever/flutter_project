@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_project/components/user_card.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_project/models/userpage_model.dart';
 import 'package:flutter_project/models/users_provider.dart';
@@ -41,6 +42,7 @@ class _UsersPageState extends State<UsersPage> {
 
   @override
   Widget build(BuildContext context) {
+    var users = Provider.of<UsersProvider>(context, listen: true).users;
     return isLoaded
         ? Scaffold(
             appBar: AppBar(
@@ -55,75 +57,86 @@ class _UsersPageState extends State<UsersPage> {
             ),
             body: ListView.builder(
               padding: EdgeInsets.all(16),
-              itemCount: Provider.of<UsersProvider>(context, listen: true)
-                  .users
-                  .length,
+              itemCount: users.length,
               itemBuilder: (BuildContext context, int index) {
-                var user = Provider.of<UsersProvider>(context, listen: true)
-                    .users[index];
-                return Container(
-                  padding: const EdgeInsets.all(8),
-                  color: Colors.white,
-                  width: double.infinity,
-                  height: 72,
-                  child: Row(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(8),
-                          child: Image.network(user.avatar),
-                        ),
-                      ),
-                      SizedBox(width: 12),
-                      Expanded(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            FittedBox(
-                              child: Text(
-                                '${user.firstName} ${user.lastName}',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600,
+                var user = users[index];
+                return InkWell(
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return userCard(user.avatar,
+                                '${user.firstName} ${user.lastName}');
+                          });
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(8),
+                      color: Colors.white,
+                      width: double.infinity,
+                      height: 72,
+                      child: Row(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(8),
+                              child: Image.network(user.avatar),
+                            ),
+                          ),
+                          SizedBox(width: 12),
+                          Expanded(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                FittedBox(
+                                  child: Text(
+                                    '${user.firstName} ${user.lastName}',
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
                                 ),
-                              ),
+                                Text(
+                                  user.email,
+                                  style: const TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                              ],
                             ),
-                            Text(
-                              user.email,
-                              style: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 12,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          ],
-                        ),
+                          ),
+                          SizedBox(width: 12),
+                          IconButton(
+                              onPressed: () {
+                                if (!user.liked) {
+                                  user.liked = !user.liked;
+                                  Provider.of<UsersProvider>(context,
+                                          listen: false)
+                                      .favorites
+                                      .add(users[index]);
+                                  Provider.of<UsersProvider>(context,
+                                          listen: false)
+                                      .updateProvider();
+                                }
+                              },
+                              icon: user.liked
+                                  ? Icon(Icons.favorite, color: Colors.red)
+                                  : Icon(Icons.favorite_border,
+                                      color: Colors.red)),
+                        ],
                       ),
-                      SizedBox(width: 12),
-                      IconButton(
-                        onPressed: () {
-                          if (Provider.of<UsersProvider>(context, listen: false)
-                              .users
-                              .isNotEmpty) {
-                            Provider.of<UsersProvider>(context, listen: false)
-                                .users
-                                .removeAt(index);
-                            Provider.of<UsersProvider>(context, listen: false)
-                                .updateProvider();
-                          }
-                        },
-                        icon: Icon(Icons.favorite, color: Colors.red),
-                      ),
-                    ],
-                  ),
-                );
+                    ));
               },
             ),
           )
-        : Center(child: CircularProgressIndicator(),);
+        : const Center(
+            child: CircularProgressIndicator(),
+          );
   }
 }

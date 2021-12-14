@@ -37,7 +37,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ChangeNotifierProvider<UsersProvider>(
             create: (context) => UsersProvider())
       ],
-      child: MaterialApp(
+      child: const MaterialApp(
         home: Scaffold(
           body: LoginPage(),
         ),

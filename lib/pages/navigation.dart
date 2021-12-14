@@ -3,8 +3,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_project/pages/favorites.dart';
 import 'package:flutter_project/pages/profile.dart';
 import 'package:flutter_project/pages/users.dart';
+import 'package:flutter_project/pages/weather.dart';
 
 class Navbar extends StatefulWidget {
+  const Navbar({Key? key}) : super(key: key);
+
   @override
   NavbarState createState() => NavbarState();
 }
@@ -20,17 +23,18 @@ class NavbarState extends State<Navbar> {
       // Нижняя навигационная панель
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        backgroundColor: Color(0xFFFFFFFF),
+        backgroundColor: const Color(0xFFFFFFFF),
         unselectedItemColor: Colors.black54,
-        selectedIconTheme: IconThemeData(color: Color(0xFFA3FF72)),
-        selectedLabelStyle: TextStyle(color: Colors.grey),
-        selectedItemColor: Color(0xFFA3FF72),
+        selectedIconTheme: const IconThemeData(color: Color(0xFFACE881)),
+        selectedLabelStyle: const TextStyle(color: Colors.grey),
+        selectedItemColor: const Color(0xFFACE881),
         items: const [
           BottomNavigationBarItem(
               icon: Icon(Icons.supervised_user_circle_rounded),
               label: 'Пользователи'),
           BottomNavigationBarItem(
               icon: Icon(Icons.favorite), label: "Избранные"),
+          BottomNavigationBarItem(icon: Icon(Icons.cloud), label: "Погода"),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: "Профиль"),
         ],
         currentIndex: seletedItem,
@@ -43,9 +47,10 @@ class NavbarState extends State<Navbar> {
         },
       ),
       body: IndexedStack(
-        children: [
+        children: const [
           UsersPage(),
           FavoritesPage(),
+          WeatherPage(),
           ProfilePage(),
         ],
         index: seletedItem,

@@ -19,10 +19,9 @@ class _UsersPageState extends State<UsersPage> {
   void getData() async {
     final response = await http.get(Uri.parse('https://reqres.in/api/users'),
         headers: {'Content-type': 'application/json'});
-
     if (response.statusCode == 200) {
       final usersData = usersFromJson(response.body);
-      if (usersData != null) {
+      if (usersData.data.isNotEmpty) {
         Provider.of<UsersProvider>(context, listen: false).users =
             usersData.data;
 
@@ -45,9 +44,24 @@ class _UsersPageState extends State<UsersPage> {
     var users = Provider.of<UsersProvider>(context, listen: true).users;
     return isLoaded
         ? Scaffold(
+            drawer: Drawer(
+              child: ListView(
+                children: const [
+                  DrawerHeader(
+                    child: Text("Какой-то заголовок"),
+                    decoration: BoxDecoration(color: Colors.green),
+                  ),
+                  ListTile(title: Text("Профиль")),
+                  ListTile(title: Text("Сообщения")),
+                  ListTile(title: Text("О себе")),
+                  ListTile(title: Text("Настройки"))
+                ],
+              ),
+            ),
+            backgroundColor: Colors.white,
             appBar: AppBar(
               backgroundColor: Colors.green,
-              title: Text(
+              title: const Text(
                 'Пользователи',
                 style: TextStyle(
                     color: Colors.white,
@@ -56,18 +70,13 @@ class _UsersPageState extends State<UsersPage> {
               ),
             ),
             body: ListView.builder(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(8),
               itemCount: users.length,
               itemBuilder: (BuildContext context, int index) {
                 var user = users[index];
                 return InkWell(
                     onTap: () {
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return userCard(user.avatar,
-                                '${user.firstName} ${user.lastName}');
-                          });
+                      myModalSheet(context, user);
                     },
                     child: Container(
                       padding: const EdgeInsets.all(8),
@@ -85,7 +94,7 @@ class _UsersPageState extends State<UsersPage> {
                               child: Image.network(user.avatar),
                             ),
                           ),
-                          SizedBox(width: 12),
+                          const SizedBox(width: 12),
                           Expanded(
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -111,24 +120,19 @@ class _UsersPageState extends State<UsersPage> {
                               ],
                             ),
                           ),
-                          SizedBox(width: 12),
+                          const SizedBox(width: 12),
                           IconButton(
                               onPressed: () {
-                                if (!user.liked) {
-                                  user.liked = !user.liked;
-                                  Provider.of<UsersProvider>(context,
-                                          listen: false)
-                                      .favorites
-                                      .add(users[index]);
-                                  Provider.of<UsersProvider>(context,
-                                          listen: false)
-                                      .updateProvider();
-                                }
+                                user.liked = !user.liked;
+                                Provider.of<UsersProvider>(context,
+                                        listen: false)
+                                    .updateProvider();
                               },
                               icon: user.liked
-                                  ? Icon(Icons.favorite, color: Colors.red)
-                                  : Icon(Icons.favorite_border,
-                                      color: Colors.red)),
+                                  ? const Icon(Icons.favorite,
+                                      color: Colors.red)
+                                  : const Icon(Icons.favorite_border,
+                                      color: Colors.red))
                         ],
                       ),
                     ));

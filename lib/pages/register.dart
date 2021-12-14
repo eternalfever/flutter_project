@@ -11,27 +11,38 @@ class RegisterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        padding: EdgeInsets.all(30),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Зарегистироваться',
-              style: TextStyle(fontSize: 24),
-            ),
-            SizedBox(height: 20),
-            MyTextField(text: 'Логин'),
-            SizedBox(height: 20),
-            MyTextField(text: 'Пароль'),
-            SizedBox(height: 20),
-            MyButton(text: 'Войти', onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => Navbar()));
-            }),
-            TextButton(onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));
-            }, child: Text('войти'))
-          ],
+      body: Center(
+        child: Container(
+          width: MediaQuery.of(context).size.width * 0.7,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text('Зарегистироваться',
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+              const SizedBox(height: 10),
+              const Text('Введите свои данные\nдля регистрации',
+                  style: TextStyle(fontSize: 14, color: Colors.grey),
+                  textAlign: TextAlign.center),
+              const SizedBox(height: 30),
+              const MyTextField(text: 'Логин'),
+              const MyTextField(text: 'Пароль'),
+              const SizedBox(height: 20),
+              MyButton(
+                  text: 'Продолжить',
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Navbar()));
+                  }),
+              TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const LoginPage()));
+                  },
+                  child: const Text('войти'))
+            ],
+          ),
         ),
       ),
     );

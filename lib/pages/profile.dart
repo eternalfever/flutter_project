@@ -13,51 +13,69 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
+      drawer: Drawer(
+          child: ListView(children: const [
+        DrawerHeader(
+          child: Text("Какой-то заголовок"),
+          decoration: BoxDecoration(color: Colors.green),
+        ),
+        ListTile(title: Text("Профиль")),
+        ListTile(title: Text("Сообщения")),
+        ListTile(title: Text("О себе")),
+        ListTile(title: Text("Настройки"))
+      ])),
       appBar: AppBar(
         backgroundColor: Colors.green,
-        title: Text('Мой профиль'),
+        title: const Text('Мой профиль'),
       ),
-      body: Center(
-        child: Container(
-          padding: EdgeInsets.all(30),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              const CircleAvatar(
-                backgroundColor: Color(0xFFA3FF72),
-                child: Icon(
-                  Icons.person,
-                  color: Colors.black12,
-                  size: 100,
-                ),
-                minRadius: 80,
-              ),
-              const Text('Кузьмина Анастасия', style: TextStyle(fontSize: 20)),
-              const Text('Группа: ПИЭ-11МО',
-                  style: TextStyle(fontSize: 16, color: Colors.grey)),
-              SizedBox(height: 20),
-              info('myemail@gmail.com', Icons.email),
-              info('Россия, Ярославль', Icons.location_on),
-              info('+7 (800) 555-35-35', Icons.phone),
-              SizedBox(height: 20),
-              for (int i = 0; i < settings.length; i++)
-                Column(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.all(5),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(settings[i]),
-                          Icon(Icons.arrow_forward_ios_rounded),
-                        ],
-                      ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Center(
+            child: Container(
+              padding: const EdgeInsets.all(15),
+              child: Column(
+                children: [
+                  const CircleAvatar(
+                    backgroundColor: Color(0xFFACE881),
+                    child: Icon(
+                      Icons.person,
+                      color: Colors.black12,
+                      size: 100,
                     ),
-                    Divider()
-                  ],
-                ),
-              SizedBox(height: 20),
-            ],
+                    minRadius: 80,
+                  ),
+                  const SizedBox(height: 20),
+                  const Text('Кузьмина Анастасия',
+                      style: TextStyle(fontSize: 20)),
+                  const SizedBox(height: 10),
+                  const Text('Группа: ПИЭ-11МО',
+                      style: TextStyle(fontSize: 14, color: Colors.grey)),
+                  const SizedBox(height: 20),
+                  info('myemail@gmail.com', Icons.email),
+                  info('Россия, Ярославль', Icons.location_on),
+                  info('+7 (800) 555-35-35', Icons.phone),
+                  const SizedBox(height: 20),
+                  for (int i = 0; i < settings.length; i++)
+                    Column(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(5),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(settings[i]),
+                              const Icon(Icons.arrow_forward_ios_rounded),
+                            ],
+                          ),
+                        ),
+                        const Divider(thickness: 1, color: Colors.grey),
+                      ],
+                    ),
+                  const SizedBox(height: 20),
+                ],
+              ),
+            ),
           ),
         ),
       ),
@@ -66,7 +84,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Widget info(String txt, IconData icn) {
     return Container(
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       child: Row(
         children: [
           Icon(
@@ -74,7 +92,7 @@ class _ProfilePageState extends State<ProfilePage> {
             color: Colors.grey,
           ),
           const SizedBox(width: 10),
-          Text(txt, style: TextStyle(color: Colors.grey))
+          Text(txt, style: const TextStyle(color: Colors.grey))
         ],
       ),
     );

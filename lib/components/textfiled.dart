@@ -10,21 +10,21 @@ class MyTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-      padding: EdgeInsets.symmetric(vertical: 5),
+      padding: const EdgeInsets.symmetric(vertical: 5),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         SizedBox(
           height: 58,
           width: double.infinity,
           child: TextField(
-            style: TextStyle(color: Colors.grey),
+            style: const TextStyle(color: Colors.grey),
             decoration: InputDecoration(
               filled: true,
-              fillColor: Color(0xFFE5E5E5),
+              fillColor: const Color(0xFFE5E5E5),
               labelText: text,
-              labelStyle: TextStyle(color: Colors.grey),
+              labelStyle: const TextStyle(color: Colors.grey),
               enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide.none,
-                borderRadius: BorderRadius.circular(15),
+                borderRadius: BorderRadius.circular(8),
               ),
             ),
           ),

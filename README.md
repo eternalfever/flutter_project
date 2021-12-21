@@ -1,16 +1,16 @@
-# flutter_project
+# Flutter mobile app
 
-A new Flutter project.
+## Описание
 
-## Getting Started
+Многоэкранное приложение, основным функционалом которого является добавление пользователей в _Избранные_. Дополнительным функционалом является возможность просмотра погоды.
 
-This project is a starting point for a Flutter application.
+## Структура
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Приложение содержит:
+- **Регистрация** / **Авторизация**: декоторативный экран.
+- Основные экраны:
+  - **Пользователи**: список пользователей, данные по которым тянутся по API с https://reqres.in/. Есть возможность добавления пользователей в _Избранные_.
+  - **Избранные**: список пользователей, добавленных из списка _Пользователи_. Реализована возможность удаления пользователей из данного списка.
+  - **Погода**: виджет погоды, данные тянутся по API https://www.weatherapi.com/.
+  - **Профиль**: декоративный экран профиля.
+- **Боковое меню**: декоративный элемент интерфейса.
